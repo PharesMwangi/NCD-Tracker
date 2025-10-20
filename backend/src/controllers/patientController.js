@@ -1,4 +1,4 @@
-const Patients = require('../models/Patients');
+const Patients = require('../models/HealthData');
 
 // Utility function to calculate BMI
 const calculateBMI = (weight, height) => weight / ((height / 100) ** 2);
@@ -7,19 +7,41 @@ const calculateBMI = (weight, height) => weight / ((height / 100) ** 2);
 const generateFeedback = ({ diseaseType, bloodSugar, bloodPressureSystolic, bloodPressureDiastolic, bmi }) => {
   let feedback = "";
 
+  // --- Diabetes feedback ---
   if (diseaseType === "diabetes" || diseaseType === "both") {
-    if (bloodSugar > 180) feedback += "High blood sugar. ";
-    else if (bloodSugar < 70) feedback += "Low blood sugar. ";
-    else feedback += "Blood sugar is normal. ";
+    if (bloodSugar > 180) {
+      feedback += "Your blood sugar is high — consider reducing sugary foods and consult your doctor. ";
+    } else if (bloodSugar < 70) {
+      feedback += "Your blood sugar is low — ensure you eat regularly and monitor for dizziness. ";
+    } else {
+      feedback += "Your blood sugar is within a healthy range — maintain balanced meals and regular exercise. ";
+    }
   }
 
+  // --- Hypertension feedback ---
   if (diseaseType === "hypertension" || diseaseType === "both") {
-    if (bloodPressureSystolic > 140 || bloodPressureDiastolic > 90)
-      feedback += "High blood pressure — consider visiting a doctor. ";
-    else feedback += "Blood pressure is normal. ";
+    if (bloodPressureSystolic > 140 || bloodPressureDiastolic > 90) {
+      feedback += "Your blood pressure is high — reduce salt intake, avoid stress, and consider seeing a doctor. ";
+    } else if (bloodPressureSystolic < 90 || bloodPressureDiastolic < 60) {
+      feedback += "Your blood pressure is low — stay hydrated and consult a doctor if you feel weak or dizzy. ";
+    } else {
+      feedback += "Your blood pressure is normal — maintain a healthy lifestyle with regular exercise and balanced nutrition. ";
+    }
   }
 
-  if (bmi >= 25) feedback += "BMI is high — maintain a healthy diet and exercise.";
+  // --- BMI feedback ---
+  if (bmi) {
+    if (bmi >= 25) {
+      feedback += "Your BMI indicates you are overweight — aim for a balanced diet and consistent physical activity. ";
+    } else if (bmi < 18.5) {
+      feedback += "Your BMI indicates you are underweight — consider nutrient-rich foods and speak to a nutritionist. ";
+    } else {
+      feedback += "Your BMI is normal — great job! Continue eating well and staying active. ";
+    }
+  }
+
+  // --- Final encouragement ---
+  feedback += "Remember to track your readings regularly for better health management.";
 
   return feedback;
 };
@@ -29,7 +51,7 @@ exports.addPatient = async (req, res) => {
   try {
     const { userId, diseaseType, bloodSugar, bloodPressureSystolic, bloodPressureDiastolic, weight, height } = req.body;
 
-    if (!userId || !diseaseType) return res.status(400).json({ message: "userId and diseaseType are required" });
+    if ( !diseaseType) return res.status(400).json({ message: "userId and diseaseType are required" });
 
     const bmi = calculateBMI(weight, height);
     const feedback = generateFeedback({ diseaseType, bloodSugar, bloodPressureSystolic, bloodPressureDiastolic, bmi });
