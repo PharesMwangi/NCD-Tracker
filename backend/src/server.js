@@ -1,26 +1,26 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const { connectDB } = require('./config/db')
+const patientRoutes = require('./routes/healthDataRoutes');
+
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: process.env.ALLOWED_ORIGIN,
+    methods: ["GET", "POST", "PUT", "DELETE"]
+}));
 app.use(express.json());
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.log(err));
+//connect to db
+connectDB();
 
 // Routes
-const patientRoutes = require('./routes/healthDataRoutes');
+app.get("/", (req, res) => res.send("Patientss API is up and running..."));
 app.use('/api/patients', patientRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`API is on http://localhost:${PORT}`));
