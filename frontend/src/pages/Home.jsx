@@ -15,24 +15,11 @@ export default function Home() {
             Please sign in to enjoy our services😊😊
           </p>
 
-          {/* <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
-            <Link to="/dashboard">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                Go to Dashboard
-              </Button>
-            </Link>
-
-            <Link to="/login">
-              <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
-                Admin Login
-              </Button>
-            </Link>
-          </div> */}
         </CardContent>
       </Card>
 
       <footer className="mt-10 text-gray-600 text-sm">
-        &copy; {new Date().getFullYear()} Digital Health Systems. All rights reserved.
+        &copy; {new Date().getFullYear()} Digital Health System- Tracker. All rights reserved.
       </footer>
     </div>
   );
