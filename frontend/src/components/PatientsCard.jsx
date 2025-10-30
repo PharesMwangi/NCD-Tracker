@@ -26,6 +26,8 @@ export default function PatientsCard({ patients }) {
                 <th className="px-4 py-2 border">Weight (kg)</th>
                 <th className="px-4 py-2 border">Height (m)</th>
                 <th className="px-4 py-2 border">BMI</th>
+                <th className="px-4 py-2 border">Feedback</th>
+                <th className="px-4 py-2 border">Last Updated</th>
               </tr>
             </thead>
             <tbody>
@@ -42,6 +44,14 @@ export default function PatientsCard({ patients }) {
                   <td className="px-4 py-2 border">{patient.weight}</td>
                   <td className="px-4 py-2 border">{patient.height}</td>
                   <td className="px-4 py-2 border">{patient.bmi?.toFixed(2) ?? "—"}</td>
+                  <td className="px-4 py-2 border text-gray-700 italic">
+                    {patient.feedback || "No feedback yet"}
+                  </td>
+                  <td className="px-4 py-2 border text-gray-500 text-xs">
+                    {patient.updatedAt
+                      ? new Date(patient.updatedAt).toLocaleString()
+                      : "—"}
+                  </td>
                 </tr>
               ))}
             </tbody>
