@@ -2,64 +2,77 @@ import { useEffect, useState } from "react";
 import { PatientsAPI } from "../lib/api";
 import NewPatientsDialog from "../components/NewPatientsDialog";
 import PatientsCard from "../components/PatientsCard";
-import { Card } from "../components/ui/card";
-import { Button } from "../components/ui/button";
+import { useUser } from "@clerk/clerk-react";
 
 export default function Dashboard({ frontendUserId }) {
   const [patients, setPatients] = useState([]);
-  const [ status, setStatus ] = useState("idle");
-  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState("idle");
+  const { user } = useUser();
   const [error, setError] = useState("");
 
-  useEffect(()=> {
-    (async () => {
-      try {
-        setStatus("loading");
-        const data = await PatientsAPI.list(frontendUserId);
-        setPatients(data);
-        setStatus("success");
-      } catch (e) { setError(e.message); setStatus("error"); }
-    })();
-  }, [frontendUserId]);
+  useEffect(() => {
+  (async () => {
+    try {
+      setStatus("loading");
+      const data = await PatientsAPI.list(frontendUserId);
+      console.log("Fetched patients:", data); // 👈 Debug log
+      setPatients(data);
+      setStatus("success");
+    } catch (e) {
+      console.error("Error fetching patients:", e);
+      setError(e.message);
+      setStatus("error");
+    }
+  })();
+}, [frontendUserId]);
+
 
   async function createPatient(payload) {
-    const created = await PatientsAPI.create({ 
-    ...payload, 
-    userId: frontendUserId 
+    const created = await PatientsAPI.create({
+      ...payload,
+      userId: frontendUserId,
+      userEmail: user?.primaryEmailAddress?.emailAddress,
     });
-    setPatients(prev => [created, ...prev]);
+    setPatients((prev) => [created, ...prev]);
   }
 
   async function savePatient(id, payload) {
     const updated = await PatientsAPI.update(id, payload);
-    setPatients(prev => prev.map(n => n._id === id ? updated : n));
+    setPatients((prev) => prev.map((p) => (p._id === id ? updated : p)));
   }
+
   async function deletePatient(id) {
-    await PatientsAPI.remove(id);
-    setPatients(prev => prev.filter(n => n._id !== id));
+    await PatientsAPI.delete(id);
+    setPatients((prev) => prev.filter((p) => p._id !== id));
   }
 
   return (
     <div className="mx-auto max-w-5xl p-4 space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">
-          {/* {user ? `${user.firstName}'s Notes` : "Your Notes"} */}
+          {user ? `${user.firstName}'s Records` : "Your Records"}
         </h2>
-        <NewPatientsDialog onCreate={createPatient} />
+        <NewPatientsDialog create={createPatient} />
       </div>
 
       {status === "loading" && <p>Loading…</p>}
       {status === "error" && <p className="text-red-600">Error: {error}</p>}
-      {status === "success" && patients.length === 0 && <p>No Record yet. Create your first note!</p>}
+      {status === "success" && patients.length === 0 && (
+        <p>No Record yet. Create your first record!</p>
+      )}
 
-      <div className="grid gap-3">
-        {patients.map(n => (
-          <PatientsCard key={n._id} patient={n} onSave={savePatient} onDelete={deletePatient} />
-        ))}
+      <div className="mt-4">
+        <PatientsCard
+          patients={patients}
+          onSave={savePatient}
+          onDelete={deletePatient}
+        />
       </div>
+
     </div>
   );
 }
+
 
   // Load records on mount
   // useEffect(() => {
