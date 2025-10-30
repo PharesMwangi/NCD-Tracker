@@ -52,13 +52,13 @@ export default function Dashboard({ frontendUserId }) {
         <h2 className="text-xl font-bold">
           {user ? `${user.firstName}'s Records` : "Your Records"}
         </h2>
-        <NewPatientsDialog create={createPatient} />
+        <NewPatientsDialog onCreate={createPatient} />
       </div>
 
       {status === "loading" && <p>Loading…</p>}
       {status === "error" && <p className="text-red-600">Error: {error}</p>}
       {status === "success" && patients.length === 0 && (
-        <p>No Record yet. Create your first record!</p>
+        <p>No Record yet. Click new record to create the first record your first record!</p>
       )}
 
       <div className="mt-4">
