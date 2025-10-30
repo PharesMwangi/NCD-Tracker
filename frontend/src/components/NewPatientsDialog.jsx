@@ -28,7 +28,7 @@ export default function NewPatientsDialog({onCreate}){
     return(
         <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
-                <Button>New Record</Button>
+                <Button className="bg-slate-500 hover:bg-slate-600">New Record</Button>
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 bg-black/40" />
