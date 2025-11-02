@@ -16,6 +16,7 @@ export default function Dashboard({ frontendUserId }) {
       setStatus("loading");
       const data = await PatientsAPI.list(frontendUserId);
       console.log("Fetched patients:", data); // 👈 Debug log
+      console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
       setPatients(data);
       setStatus("success");
     } catch (e) {
