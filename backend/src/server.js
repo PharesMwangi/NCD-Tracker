@@ -11,7 +11,7 @@ const app = express();
 app.use(cors({
     origin: [
         process.env.ALLOWED_ORIGIN,
-        'ncd-tracker.vercel.app'
+        'https://ncd-tracker.vercel.app/'
     ],
     methods: ["GET", "POST", "PUT", "DELETE"]
 }));
