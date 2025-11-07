@@ -10,8 +10,9 @@ const app = express();
 // Middleware
 app.use(cors({
     origin: [
-        // process.env.ALLOWED_ORIGIN,
-        'https://ncd-tracker.vercel.app'
+         process.env.ALLOWED_ORIGIN,
+         process.env.ALLOWED_CORS_ORIGIN
+        //'https://ncd-tracker.vercel.app'
     ],
     methods: ["GET", "POST", "PUT", "DELETE"]
 }));
