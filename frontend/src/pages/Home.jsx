@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { SignInButton } from "@clerk/clerk-react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 
@@ -12,29 +12,27 @@ export default function Home() {
           </h1>
 
           <p className="text-gray-700 text-lg leading-relaxed">
-            Take control of your health journey with the <strong>NCD Tracker</strong> — 
-            a smart digital tool designed to help patients living with chronic conditions 
-            such as diabetes, hypertension, and heart disease.
+            Welcome to <strong>NCD Tracker</strong> — your personal health companion for 
+            managing chronic conditions like hypertension, diabetes, and heart disease. 
+            Track your health data, monitor trends, and stay on top of your wellbeing.
           </p>
 
           <p className="text-gray-600 text-base leading-relaxed">
-            By regularly recording your symptoms, medication, and lifestyle habits, 
-            you’ll gain a clear picture of your progress over time. This empowers you and 
-            your healthcare provider to make timely and informed decisions — improving 
-            your long-term wellbeing and quality of life.
+            By consistently logging your blood pressure, BMI, and symptoms, you empower 
+            yourself and your healthcare provider with valuable insights — helping prevent 
+            complications and supporting better treatment outcomes.
           </p>
 
-          <p className="text-gray-600 text-base leading-relaxed italic">
-            “Small daily steps make big health changes.” Track consistently. Stay motivated. 
-            Live healthier.
+          <p className="text-gray-600 text-base italic leading-relaxed">
+            “Every record you make today is a step toward a healthier tomorrow.”
           </p>
 
           <div className="pt-4">
-            <Link to="/sign-in">
+            <SignInButton mode="modal">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl text-lg shadow-md">
-                Get Started / Sign In
+                Sign In to Get Started
               </Button>
-            </Link>
+            </SignInButton>
           </div>
         </CardContent>
       </Card>
