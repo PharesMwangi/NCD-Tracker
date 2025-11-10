@@ -13,13 +13,14 @@ export default function Home() {
 
           <p className="text-gray-700 text-lg leading-relaxed">
             Welcome to <strong>NCD Tracker</strong> — your personal health companion for 
-            managing chronic conditions like hypertension, diabetes, and heart disease. 
+            managing chronic conditions like hypertension, and diabetes. 
             Track your health data, monitor trends, and stay on top of your wellbeing.
           </p>
 
           <p className="text-gray-600 text-base leading-relaxed">
             By consistently logging your blood pressure, BMI, and symptoms, you empower 
-            yourself and your healthcare provider with valuable insights — helping prevent 
+            yourself and your healthcare provider with valuable insights through personalized feedbacks and 
+            graphs to show your progress — helping prevent 
             complications and supporting better treatment outcomes.
           </p>
 
