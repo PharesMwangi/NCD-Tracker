@@ -8,14 +8,14 @@ const patientRoutes = require('./routes/healthDataRoutes');
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: [
-        //  process.env.ALLOWED_ORIGIN,
-         process.env.ALLOWED_CORS_ORIGIN
-        //'https://ncd-tracker.vercel.app'
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"]
-}));
+app.use(
+  cors({
+    origin: [process.env.ALLOWED_ORIGIN, process.env.ALLOWED_CORS_ORIGIN],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 //connect to db
