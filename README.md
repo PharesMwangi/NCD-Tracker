@@ -2,6 +2,11 @@
 
 A minimal full-stack Non-Communicable Diseases (NCD) tracker: React + Vite frontend and an Express + MongoDB backend. Users can create, list and  update patient health records (blood sugar, blood pressure, weight/height) — backend also computes BMI and returns simple feedback messages.
 
+You can access it through:
+```
+ncd-tracker.vercel.app
+```
+
 ## Tech stack
 
 - Frontend: React, Vite, Tailwind CSS, Clerk for auth, Axios
