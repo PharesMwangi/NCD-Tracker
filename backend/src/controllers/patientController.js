@@ -14,7 +14,7 @@ const generateFeedback = ({ diseaseType, bloodSugar, bloodPressureSystolic, bloo
     } else if (bloodSugar < 70) {
       feedback += "Your blood sugar is low — ensure you eat regularly and monitor for dizziness. ";
     } else {
-      feedback += "Your blood sugar is within a healthy range — maintain balanced meals and regular exercise. ";
+      feedback += "Your blood sugar is within a healthy range ";
     }
   }
 
@@ -25,13 +25,13 @@ const generateFeedback = ({ diseaseType, bloodSugar, bloodPressureSystolic, bloo
     } else if (bloodPressureSystolic < 90 || bloodPressureDiastolic < 60) {
       feedback += "Your blood pressure is low — stay hydrated and consult a doctor if you feel weak or dizzy. ";
     } else {
-      feedback += "Your blood pressure is normal — maintain a healthy lifestyle with regular exercise and balanced nutrition. ";
+      feedback += "Your blood sugar is within a healthy range — keep monitoring regularly. ";
     }
   }
 
   // --- BMI feedback ---
   if (bmi) {
-    if (bmi >= 25) {
+    if (bmi >= 30) {
       feedback += "Your BMI indicates you are overweight — aim for a balanced diet and consistent physical activity. ";
     } else if (bmi < 18.5) {
       feedback += "Your BMI indicates you are underweight — consider nutrient-rich foods and speak to a nutritionist. ";
