@@ -3,62 +3,92 @@ import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
 import Insight from "@/pages/Insight";
 import { NavigationMenu } from "./components/ui/navigation-menu";
-import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from "@clerk/clerk-react";
+
+import Particles from "./components/Particles"; // <-- Make sure the path is correct
 
 export default function App() {
   const { user } = useUser();
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        {/* Header */}
-        <header className="bg-white dark:bg-gray-800 border-b shadow">
-          <div className="mx-auto max-w-5xl p-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">NCD Disease Tracker</h1>
-              <nav className="flex gap-4 mt-2">
-                <Link className="hover:underline" to="/">Home</Link>
-                <Link className="hover:underline" to="/dashboard">Dashboard</Link>
-                <Link className="hover:underline" to="/insight">Insight</Link>
-              </nav>
-            </div>
+      {/* OUTER WRAPPER — enables background to cover whole screen */}
+      <div className="relative min-h-screen overflow-hidden">
 
-            <div className="flex items-center gap-3">
+        {/* BACKGROUND PARTICLES */}
+        <Particles
+          particleColors={["#99ccff", "#cce7ff", "#ffffff"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={80}
+          moveParticlesOnHover={true}
+          alphaParticles={false}
+          className="absolute inset-0 -z-10 w-screen h-screen"
+        />
+
+        {/* EVERYTHING ELSE SITS ABOVE THE BACKGROUND */}
+        <div className="relative z-10">
+
+          {/* HEADER */}
+          <header className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md border-b shadow">
+            <div className="mx-auto max-w-5xl p-4 flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold">NCD Disease Tracker</h1>
+
+                <nav className="flex gap-4 mt-2">
+                  <Link className="hover:underline" to="/">Home</Link>
+                  <Link className="hover:underline" to="/dashboard">Dashboard</Link>
+                  <Link className="hover:underline" to="/insight">Insight</Link>
+                </nav>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <SignedOut>
+                  <SignInButton mode="modal" />
+                </SignedOut>
+
+                <SignedIn>
+                  <UserButton afterSignOutUrl="/" />
+                </SignedIn>
+              </div>
+            </div>
+          </header>
+
+          {/* MAIN CONTENT */}
+          <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+
+            <div className="max-w-5xl mx-auto">
               <SignedOut>
-                <SignInButton mode="modal" />
-              </SignedOut>
-              <SignedIn>
-                <UserButton afterSignOutUrl="/" />
-              </SignedIn>
-            </div>
-          </div>
-        </header>
-
-        {/* Main content */}
-        <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <div className="max-5-5xl mx-auto">
-            <SignedOut>
-              <NavigationMenu />
+                <NavigationMenu />
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  
                 </Routes>
-            </SignedOut>
+              </SignedOut>
 
-            <SignedIn>
-              <NavigationMenu />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route
+              <SignedIn>
+                <NavigationMenu />
+
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route
                     path="/dashboard"
                     element={<Dashboard frontendUserId={user?.id} />}
                   />
                   <Route path="/insight" element={<Insight />} />
                 </Routes>
-            </SignedIn>
-          </div>
-          
-        </main>
+              </SignedIn>
+            </div>
+
+          </main>
+
+        </div>
       </div>
     </Router>
   );
