@@ -6,6 +6,10 @@ const patientRoutes = require('./routes/healthDataRoutes');
 
 
 const app = express();
+app.use(express.json());
+
+//connect to db
+connectDB();
 
 // Middleware
 app.use(
@@ -15,11 +19,6 @@ app.use(
     credentials: true,
   })
 );
-
-app.use(express.json());
-
-//connect to db
-connectDB();
 
 // Routes
 app.get("/", (req, res) => res.send("Patientss API is up and running..."));
