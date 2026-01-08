@@ -31,8 +31,8 @@ export default function NewPatientsDialog({onCreate}){
                 <Button className="bg-slate-500 hover:bg-slate-600">New Record</Button>
             </Dialog.Trigger>
             <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 bg-black/40" />
-                <Dialog.Content className="fixed left-1/2 top-1/2 w-[95vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-4 shadow-xl">
+                <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40" />
+                <Dialog.Content className="fixed left-1/2 top-1/2 w-[95vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-4 shadow-xl z-50">
                     <Dialog.Title className='text-lg font-semibold mb-2' >Create Record</Dialog.Title>
                     <form onSubmit={submit} className="space-y-3">
                         <select className="w-full border rounded-md p-2" name="diseaseType" value={form.diseaseType} onChange={e=>setForm({...form, diseaseType:e.target.value})} required>
